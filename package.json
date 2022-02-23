@@ -4,6 +4,7 @@
   "description": "A space tbd",
   "main": "index.js",
   "scripts": {
+    "sheets": "npm run sheetsjs",
     "sheetsjs": "node ./projects/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
