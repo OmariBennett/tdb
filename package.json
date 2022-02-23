@@ -1,0 +1,24 @@
+{
+  "name": "tbd",
+  "version": "1.0.0",
+  "description": "A space tbd",
+  "main": "index.js",
+  "scripts": {
+    "sheetsjs": "node ./projects/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OmariBennett/tdb.git"
+  },
+  "keywords": [
+    "'js'",
+    "'javaScript'"
+  ],
+  "author": "Jelani B",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OmariBennett/tdb/issues"
+  },
+  "homepage": "https://github.com/OmariBennett/tdb#readme"
+}
