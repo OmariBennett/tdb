@@ -10,9 +10,9 @@
     Step  2. Research & Refine
 ?     How to create a budget?
         - Calculate your net income
-              Todo: C.R.U.D invoice (Create, Read, Update, & Delete)
+              Todo: C.R.U.D invoices (Create, Read, Update, & Delete)
           - List monthly expenses
-              Todo: C.R.U.D work sheet (Create, Read, Update, & Delete)
+              Todo: C.R.U.D worksheets (Create, Read, Update, & Delete)
           - Label fixed and variable expenses
               Todo: Determine if invoice is a fixed or variable expenses
 
@@ -26,7 +26,7 @@
               Todo: Allow up to 50% of your income for needs.
               Todo: Leave 30% of your income for wants.
               Todo: Commit 20% of your income to savings and debt repayment.
-              Todo: Track and manage your budget through regular check-ins
+              Todo: Track and manage your budget through regular check-ins.
 
     Step  3. Pseudocode
     Step 4. Test-Driven Development (TDD)
