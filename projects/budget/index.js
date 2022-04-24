@@ -1,8 +1,33 @@
 /* If I had an hour to solve a problem, I'd spend 55 minutes thinking about the problem and 5 minutes thinking about solutions." -Albert Einstein
  */
 /*  Problem Solving Steps:
-    Step  1. Identify - the first step is to identify and understand the nature of the problem
-    Step  2. Research & Refine - At this step you should have a main problem broken down into a few subproblem
+    Step  1. Identify the problem
+?     What problem dose the 'Budget' application solve?
+        - A central hub for all my financial accounts
+        - A visual representation of my finances 
+        - A personal way to budget my finances
+    
+    Step  2. Research & Refine
+?     How to create a budget?
+        - Calculate your net income
+              Todo: C.R.U.D invoice (Create, Read, Update, & Delete)
+          - List monthly expenses
+              Todo: C.R.U.D work sheet (Create, Read, Update, & Delete)
+          - Label fixed and variable expenses
+              Todo: Determine if invoice is a fixed or variable expenses
+
+        - Determine average monthly costs for each expenses
+              Todo: Output the worksheet invoices
+          - Make adjustments
+
+?     How to budget money after-tax income?
+        - Calculate your monthly income, pick a budgeting method, and monitor your progress.
+          - Try the 50/30/20 rule as a simple budgeting framework.
+              Todo: Allow up to 50% of your income for needs.
+              Todo: Leave 30% of your income for wants.
+              Todo: Commit 20% of your income to savings and debt repayment.
+              Todo: Track and manage your budget through regular check-ins
+
     Step  3. Pseudocode
     Step 4. Test-Driven Development (TDD)
     Step 5. Implement
@@ -18,7 +43,7 @@
 
     Step New Deposit:
       todo - submit new Amount form
-      todo - submit New Check form
+      todo - submit new Check form
       todo - submit new Other Amount form
 
     Step Update Cards: Deposit amount to the card savings
