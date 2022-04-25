@@ -36,6 +36,8 @@
 */
 
 /*  App Features:
+    Step C.R.U.D worksheets (Create, Read, Update, & Delete)
+    Step C.R.U.D invoices (Create, Read, Update, & Delete)
     Step New Monthly Invoice: Record 'repeating' invoices
       todo - create new Excel sheet
       todo - create a new monthly invoice
