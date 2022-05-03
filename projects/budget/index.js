@@ -6,13 +6,20 @@
         - A central hub for all my financial accounts
         - A visual representation of my finances 
         - A personal way to budget my finances
-    
+
     Step  2. Research & Refine
 ?     How to create a budget?
         - Calculate your net income
               Todo: C.R.U.D invoices (Create, Read, Update, & Delete)
+              Step 1: Input all net increase (pay stub, extra cash, ...)
+                Step 1a: Create a new Invoice: Id | Author | Amount | Date | Modified | Modified Date | Memo |
+                Step 1b: Determine if input is one time invoice or reoccurring invoice
+
           - List monthly expenses
               Todo: C.R.U.D worksheets (Create, Read, Update, & Delete)
+              Step 2: Automatically add or deduct reoccurring monthly expenses
+                Step 2a: Add any additional expenses 
+
           - Label fixed and variable expenses
               Todo: Determine if invoice is a fixed or variable expenses
 
@@ -27,8 +34,23 @@
               Todo: Leave 30% of your income for wants.
               Todo: Commit 20% of your income to savings and debt repayment.
               Todo: Track and manage your budget through regular check-ins.
-
-    Step  3. Pseudocode
+*/
+//  Step  3. Pseudocode
+//       - Calculate your net income
+//             Todo: C.R.U.D invoices (Create, Read, Update, & Delete)
+//             Step 1: Input all net increase (pay stub, extra cash, ...)
+//             Step 1a: Create a new Invoice: Id | Author | Amount | Date | Modified | Modified Date | Memo |
+//todo         Convert the string into a object 'Netflix bill 19.07 Jan 14'
+const invoice = {
+	id: 01234,
+	author: 'Netflix',
+	amount: '19.07',
+	date: 'Jan 14',
+	Modified: false,
+	Modified_Date: '',
+	Memo: '',
+};
+/*
     Step 4. Test-Driven Development (TDD)
     Step 5. Implement
     Step 6. Practice
@@ -55,10 +77,5 @@
       todo - submit new invoice form (once)
       todo - submit new invoice form (repeating)
 */
-
-//  Create a new Invoice:
-//  *  | Id | Author | Amount | Date | Modified | Modified Date | Memo |
-// todo Convert the string into a object 'Netflix bill 19.07 Jan 14'
-const invoice = { author: 'Netflix', amount: '19.07', date: 'Jan 14' };
 
 console.log('hello world!');
