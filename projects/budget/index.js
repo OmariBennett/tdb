@@ -34,29 +34,66 @@
               Todo: Leave 30% of your income for wants.
               Todo: Commit 20% of your income to savings and debt repayment.
               Todo: Track and manage your budget through regular check-ins.
+
+*       SheetJs Usage
+          Most scenarios involving spreadsheets and data can be broken into 5 parts:
+            1.  Acquire Data: Data may be stored anywhere: local or remote files, 
+                databases, HTML TABLE, or even generated programmatically in the web browser.
+
+            2. Extract Data: For spreadsheet files, this involves parsing raw bytes to read
+                the cell data. For general JS data, this involves reshaping the data.
+
+            3. Process Data: From generating summary statistics to cleaning data records,
+                this step is the heart of the problem.
+
+            4. Package Data: This can involve making a new spreadsheet or serializing with
+                JSON.stringify or writing XML or simply flattening data for UI tools.
+
+            5. Release Data: Spreadsheet files can be uploaded to a server or written locally.
+                Data can be presented to users in an HTML TABLE or data grid. 
+
 */
 //  Step  3. Pseudocode
-//       - Calculate your net income
-//             Todo: C.R.U.D invoices (Create, Read, Update, & Delete)
-//             Step 1: Input all net increase (pay stub, extra cash, ...)
-//             Step 1a: Create a new Invoice: Id | Author | Amount | Date | Modified | Modified Date | Memo |
-//todo         Convert the string into a object 'Netflix bill 19.07 Jan 14'
-const invoice = {
-	id: 01234,
-	author: 'Netflix',
-	amount: '19.07',
-	date: 'Jan 14',
-	Modified: false,
-	Modified_Date: '',
-	Memo: '',
-};
-/*
-    Step 4. Test-Driven Development (TDD)
-    Step 5. Implement
-    Step 6. Practice
-    Step 7. Repeat
-*/
+//    Most scenarios involving spreadsheets and data can be broken into 5 parts:
+//      1. Acquire Data: Data may be stored anywhere: local or remote files,
+//          databases, HTML TABLE, or even generated programmatically in the web browser.
 
+//          - Calculate your net income
+//          Todo: C.R.U.D invoices (Create, Read, Update, & Delete)
+//          Step 1: Input all net increase (pay stub, extra cash, ...)
+//          Step 1a: Create a new Invoice: Id | Author | Amount | Date | Modified | Modified Date | Memo |
+//          Todo:  Convert the string into a object 'Netflix bill 19.07 Jan 14'
+//          Step 1b: Determine if input is one time invoice or reoccurring invoice
+
+//          - Label fixed and variable expenses
+//          Todo: Determine if invoice is a fixed or variable expenses
+
+//      2. Extract Data: For spreadsheet files, this involves parsing raw bytes to read
+//          the cell data. For general JS data, this involves reshaping the data.
+
+//      3. Process Data: From generating summary statistics to cleaning data records,
+//          this step is the heart of the problem.
+
+//          - List monthly expenses
+//          Todo: C.R.U.D worksheets (Create, Read, Update, & Delete)
+//          Step 2: Automatically add or deduct reoccurring monthly expenses
+//          Step 2a: Add any additional expenses
+
+//      4. Package Data: This can involve making a new spreadsheet or serializing with
+//          JSON.stringify or writing XML or simply flattening data for UI tools.
+
+//      5. Release Data: Spreadsheet files can be uploaded to a server or written locally.
+//          Data can be presented to users in an HTML TABLE or data grid.
+
+//          - Determine average monthly costs for each expenses
+//          Todo: Output the worksheet invoices
+
+//          - Make adjustments
+
+//    Step 4. Test-Driven Development (TDD)
+//    Step 5. Implement
+//    Step 6. Practice
+//    Step 7. Repeat
 /*  App Features:
     Step C.R.U.D worksheets (Create, Read, Update, & Delete)
     Step C.R.U.D invoices (Create, Read, Update, & Delete)
@@ -79,3 +116,12 @@ const invoice = {
 */
 
 console.log('hello world!');
+const invoice = {
+	id: 01234,
+	author: 'Netflix',
+	amount: '19.07',
+	date: 'Jan 14',
+	Modified: false,
+	Modified_Date: '',
+	Memo: '',
+};
