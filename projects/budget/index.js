@@ -1,3 +1,4 @@
+// @ts-check
 /* If I had an hour to solve a problem, I'd spend 55 minutes thinking about the problem and 5 minutes thinking about solutions." -Albert Einstein
  */
 /*  Problem Solving Steps:
@@ -49,23 +50,70 @@
             4. Package Data: This can involve making a new spreadsheet or serializing with
                 JSON.stringify or writing XML or simply flattening data for UI tools.
 
-            5. Release Data: Spreadsheet files can be uploaded to a server or written locally.
-                Data can be presented to users in an HTML TABLE or data grid. 
+                5. Release Data: Spreadsheet files can be uploaded to a server or written locally.
+                Data can be presented to users in an HTML TABLE or data grid. */
 
-*/
 //  Step  3. Pseudocode
+const XLSX = require('xlsx');
+const fs = require('fs');
 //    Most scenarios involving spreadsheets and data can be broken into 5 parts:
 //      1. Acquire Data: Data may be stored anywhere: local or remote files,
 //          databases, HTML TABLE, or even generated programmatically in the web browser.
-//          Step 1: Create a new workbook
-/*            The book_new utility function creates an empty workbook with no worksheets.
-                Spreadsheet software generally require at least one worksheet and enforce the requirement
-                in the user interface. 
-              ! This library enforces the requirement at write time, throwing errors if an empty workbook 
-!               is passed to write functions. */
+let ws_titles = [
+	['id', 'author', 'amount', 'date', 'modified', 'modified_Date', 'memo'],
+];
+let filename = 'out.xlsb';
 
-//          Step 1a: Save workbook to local storage
-//          Todo: C.R.U.D worksheets (Create, Read, Update, & Delete)
+//          Step 1: Create a new workbook
+const newWorkBook = filename => {
+	try {
+		const workbook = XLSX.utils.book_new();
+		//        Step 1a: Save workbook to local storage (local file system)
+		return XLSX.writeFile(workbook, filename);
+	} catch {
+		/*            The book_new utility function creates an empty workbook with no worksheets.
+                  Spreadsheet software generally require at least one worksheet and enforce the requirement
+                  in the user interface. 
+                ! This library enforces the requirement at write time, throwing errors if an empty workbook 
+  !               is passed to write functions. */
+		console.error(
+			'Empty workbook with no worksheet was pass to the writeFile()',
+		);
+	}
+};
+//             Todo: C.R.U.D workbooks (Create, Read, Update, & Delete)
+//*              Create WorkSheet
+const createWorkSheet = (workSheetName, workBook, filePath) => {
+	let ws_name = workSheetName;
+	let ws_data = [...ws_titles];
+	// Todo Append Data to WorkSheet
+	let workSheet = XLSX.utils.aoa_to_sheet(ws_data);
+	// Todo Append Data to WorkBook
+	XLSX.utils.book_append_sheet(workBook, workSheet, ws_name);
+	// Todo Create WorkBook
+	XLSX.writeFile(workBook, filePath);
+};
+//*              Append WorkSheet to Workbook
+function appendWorkSheet(ws_name, workSheet, workBook) {
+	let ws_data = [...ws_titles, ...workSheet];
+	//* make worksheet
+	let ws = XLSX.utils.aoa_to_sheet(ws_data);
+
+	/* Add the worksheet to the workbook */
+	XLSX.utils.book_append_sheet(workBook, ws, ws_name);
+}
+//*              Read Workbook data
+const readWorkbook = filePath => XLSX.readFile(filePath);
+//*              Delete Workbook
+const deleteWorkbook = path => {
+	fs.unlink(path, error => {
+		if (error) {
+			console.error(error);
+			return;
+		}
+		console.log('file removed!');
+	});
+};
 
 //      2. Extract Data: For spreadsheet files, this involves parsing raw bytes to read
 //          the cell data. For general JS data, this involves reshaping the data.
@@ -90,6 +138,7 @@
 //          - Determine average monthly costs for each expenses
 
 //          - Make adjustments
+//          Todo: Output the worksheet invoices
 
 //          - Calculate your monthly income, pick a budgeting method, and monitor your progress.
 //            - Try the 50/30/20 rule as a simple budgeting framework.
@@ -103,7 +152,7 @@
 
 //      5. Release Data: Spreadsheet files can be uploaded to a server or written locally.
 //          Data can be presented to users in an HTML TABLE or data grid.
-//          Todo: Output the worksheet invoices
+//          Todo: Output the workbook & worksheet
 
 //    Step 4. Test-Driven Development (TDD)
 //    Step 5. Implement
@@ -132,7 +181,7 @@
 
 console.log('hello world!');
 const invoice = {
-	id: 01234,
+	id: 'ABC012',
 	author: 'Netflix',
 	amount: '19.07',
 	date: 'Jan 14',

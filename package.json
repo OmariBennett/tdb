@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/OmariBennett/tdb/issues"
   },
-  "homepage": "https://github.com/OmariBennett/tdb#readme"
+  "homepage": "https://github.com/OmariBennett/tdb#readme",
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  }
 }
