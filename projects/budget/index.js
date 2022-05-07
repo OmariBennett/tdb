@@ -57,13 +57,15 @@
 //    Most scenarios involving spreadsheets and data can be broken into 5 parts:
 //      1. Acquire Data: Data may be stored anywhere: local or remote files,
 //          databases, HTML TABLE, or even generated programmatically in the web browser.
+//          Step 1: Create & Save a workbook
+//          Todo: C.R.U.D worksheets (Create, Read, Update, & Delete)
 
 //          - Calculate your net income
 //          Todo: C.R.U.D invoices (Create, Read, Update, & Delete)
-//          Step 1: Input all net increase (pay stub, extra cash, ...)
-//          Step 1a: Create a new Invoice: Id | Author | Amount | Date | Modified | Modified Date | Memo |
-//          Todo:  Convert the string into a object 'Netflix bill 19.07 Jan 14'
-//          Step 1b: Determine if input is one time invoice or reoccurring invoice
+//          Step 2: Input all net increase (pay stub, extra cash, ...)
+//            Step 2a: Create a new Invoice: Id | Author | Amount | Date | Modified | Modified Date | Memo |
+//            Todo:  Convert the string into a object 'Netflix bill 19.07 Jan 14'
+//            Step 2b: Determine if input is one time invoice or reoccurring invoice
 
 //          - Label fixed and variable expenses
 //          Todo: Determine if invoice is a fixed or variable expenses
@@ -75,20 +77,19 @@
 //          this step is the heart of the problem.
 
 //          - List monthly expenses
-//          Todo: C.R.U.D worksheets (Create, Read, Update, & Delete)
-//          Step 2: Automatically add or deduct reoccurring monthly expenses
-//          Step 2a: Add any additional expenses
+//          Step 3: Automatically add or deduct reoccurring monthly expenses
+//            Step 3a: Add any additional expenses
+
+//          - Determine average monthly costs for each expenses
+
+//          - Make adjustments
 
 //      4. Package Data: This can involve making a new spreadsheet or serializing with
 //          JSON.stringify or writing XML or simply flattening data for UI tools.
 
 //      5. Release Data: Spreadsheet files can be uploaded to a server or written locally.
 //          Data can be presented to users in an HTML TABLE or data grid.
-
-//          - Determine average monthly costs for each expenses
 //          Todo: Output the worksheet invoices
-
-//          - Make adjustments
 
 //    Step 4. Test-Driven Development (TDD)
 //    Step 5. Implement
@@ -107,8 +108,8 @@
       todo - submit new Check form
       todo - submit new Other Amount form
 
-    Step Update Cards: Deposit amount to the card savings
-      todo - depost total amount to the cards savings
+    Step Update Cards: Deposit amount to the card saving accounts
+      todo - depost total amount to the cards saving accounts
 
     Step Add New Invoice:
       todo - submit new invoice form (once)
