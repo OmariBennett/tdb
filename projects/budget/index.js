@@ -57,8 +57,21 @@
 //    Most scenarios involving spreadsheets and data can be broken into 5 parts:
 //      1. Acquire Data: Data may be stored anywhere: local or remote files,
 //          databases, HTML TABLE, or even generated programmatically in the web browser.
-//          Step 1: Create & Save a workbook
+//          Step 1: Create a new workbook
+/*            The book_new utility function creates an empty workbook with no worksheets.
+                Spreadsheet software generally require at least one worksheet and enforce the requirement
+                in the user interface. 
+              ! This library enforces the requirement at write time, throwing errors if an empty workbook 
+!               is passed to write functions. */
+
+//          Step 1a: Save workbook to local storage
 //          Todo: C.R.U.D worksheets (Create, Read, Update, & Delete)
+
+//      2. Extract Data: For spreadsheet files, this involves parsing raw bytes to read
+//          the cell data. For general JS data, this involves reshaping the data.
+
+//      3. Process Data: From generating summary statistics to cleaning data records,
+//          this step is the heart of the problem.
 
 //          - Calculate your net income
 //          Todo: C.R.U.D invoices (Create, Read, Update, & Delete)
@@ -70,12 +83,6 @@
 //          - Label fixed and variable expenses
 //          Todo: Determine if invoice is a fixed or variable expenses
 
-//      2. Extract Data: For spreadsheet files, this involves parsing raw bytes to read
-//          the cell data. For general JS data, this involves reshaping the data.
-
-//      3. Process Data: From generating summary statistics to cleaning data records,
-//          this step is the heart of the problem.
-
 //          - List monthly expenses
 //          Step 3: Automatically add or deduct reoccurring monthly expenses
 //            Step 3a: Add any additional expenses
@@ -83,6 +90,13 @@
 //          - Determine average monthly costs for each expenses
 
 //          - Make adjustments
+
+//          - Calculate your monthly income, pick a budgeting method, and monitor your progress.
+//            - Try the 50/30/20 rule as a simple budgeting framework.
+//              Todo: Allow up to 50% of your income for needs.
+//              Todo: Leave 30% of your income for wants.
+//              Todo: Commit 20% of your income to savings and debt repayment.
+//              Todo: Track and manage your budget through regular check-ins.
 
 //      4. Package Data: This can involve making a new spreadsheet or serializing with
 //          JSON.stringify or writing XML or simply flattening data for UI tools.
