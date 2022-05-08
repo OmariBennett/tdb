@@ -65,11 +65,22 @@ let ws_titles = [
 let filename = 'out.xlsb';
 
 //          Step 1: Create a new workbook
-const newWorkBook = filename => {
+/**
+ *  Create a new workbook.
+ * @param {string} filename Name for the file with file extension. ex: 'file_name.xlsx'
+ *
+ * The book_new utility function creates an empty workbook with no worksheets.
+ * Spreadsheet software generally require at least one worksheet and enforce the requirement
+ * in the user interface.
+ *
+ * This library enforces the requirement at write time, throwing errors if an empty workbook is passed to write functions.
+ * @returns {object}
+ */
+const createWorkbook = filename => {
 	try {
 		const workbook = XLSX.utils.book_new();
 		//        Step 1a: Save workbook to local storage (local file system)
-		return XLSX.writeFile(workbook, filename);
+		return XLSX.writeFile(workbook, filename); //? What dose this func returns? (my guess is an object)
 	} catch {
 		/*            The book_new utility function creates an empty workbook with no worksheets.
                   Spreadsheet software generally require at least one worksheet and enforce the requirement
@@ -81,30 +92,56 @@ const newWorkBook = filename => {
 		);
 	}
 };
-//             Todo: C.R.U.D workbooks (Create, Read, Update, & Delete)
-//*              Create WorkSheet
-const createWorkSheet = (workSheetName, workBook, filePath) => {
-	let ws_name = workSheetName;
-	let ws_data = [...ws_titles];
-	// Todo Append Data to WorkSheet
-	let workSheet = XLSX.utils.aoa_to_sheet(ws_data);
-	// Todo Append Data to WorkBook
-	XLSX.utils.book_append_sheet(workBook, workSheet, ws_name);
-	// Todo Create WorkBook
-	XLSX.writeFile(workBook, filePath);
-};
-//*              Append WorkSheet to Workbook
-function appendWorkSheet(ws_name, workSheet, workBook) {
-	let ws_data = [...ws_titles, ...workSheet];
-	//* make worksheet
-	let ws = XLSX.utils.aoa_to_sheet(ws_data);
+//             Todo: C.R.U.D workbook (Create, Read, Update, & Delete)
+//*              Create Worksheet
 
-	/* Add the worksheet to the workbook */
-	XLSX.utils.book_append_sheet(workBook, ws, ws_name);
+/**
+ *  Create a new worksheet.
+ * @param {string} ws_title Name for the worksheet object
+ * @param {object} workBook Workbook object
+ * @param {string} file_name Name for the file with file extension. ex: 'file_name.xlsx'
+ */
+const createWorksheet = (ws_title, workBook, file_name) => {
+	let ws_data = [...ws_titles];
+	// Append Data to Worksheet
+	let worksheet = XLSX.utils.aoa_to_sheet(ws_data);
+	// Append Data to WorkBook
+	XLSX.utils.book_append_sheet(workBook, worksheet, ws_title);
+	// Create WorkBook
+	XLSX.writeFile(workBook, file_name);
+};
+
+//*              Append Worksheet to Workbook
+/**
+ *  Append Worksheet to the workbook
+ * @param {string} ws_title Name for the worksheet
+ * @param {array} worksheet Array of arrays in row-major order
+ * @param {object} workBook Workbook object
+ */
+function appendWorksheet(ws_title, worksheet, workBook) {
+	let ws_data = [...ws_titles, ...worksheet];
+	let newWorksheet = XLSX.utils.aoa_to_sheet(ws_data);
+
+	XLSX.utils.book_append_sheet(workBook, newWorksheet, ws_title);
 }
+
 //*              Read Workbook data
+/**
+ * Read workbook
+ * @param {string} filePath Read a spreadsheet file at the supplied
+ * path. Browsers generally do not allow reading files in this way
+ * (it is deemed a security risk), and attempts to read files in
+ * this way will throw an error.
+ *
+ * @return {object}
+ */
 const readWorkbook = filePath => XLSX.readFile(filePath);
+
 //*              Delete Workbook
+/**
+ * Delete workbook from the file directory
+ * @param {string} path The file path of the workbook
+ */
 const deleteWorkbook = path => {
 	fs.unlink(path, error => {
 		if (error) {
@@ -115,6 +152,17 @@ const deleteWorkbook = path => {
 	});
 };
 
+//          - Create a invoice
+//          Todo: C.R.U.D invoice (Create, Read, Update, & Delete)
+//          Step 2: Create Invoice
+//            Step 2a: Invoice: Id | Author | Amount | Date | Modified | Modified Date | Memo |
+//            Convert the string into a object 'Netflix bill 19.07 Jan 14'
+//            Net increase (pay stub, extra cash, ...)
+
+//          Step 2b: Get Invoice
+//          Step 2c: Update Invoice
+//          Step 2d: Delete Invoice
+
 //      2. Extract Data: For spreadsheet files, this involves parsing raw bytes to read
 //          the cell data. For general JS data, this involves reshaping the data.
 
@@ -122,14 +170,11 @@ const deleteWorkbook = path => {
 //          this step is the heart of the problem.
 
 //          - Calculate your net income
-//          Todo: C.R.U.D invoices (Create, Read, Update, & Delete)
-//          Step 2: Input all net increase (pay stub, extra cash, ...)
-//            Step 2a: Create a new Invoice: Id | Author | Amount | Date | Modified | Modified Date | Memo |
-//            Todo:  Convert the string into a object 'Netflix bill 19.07 Jan 14'
-//            Step 2b: Determine if input is one time invoice or reoccurring invoice
+//          Step 1: Input all net increase (pay stub, extra cash, ...)
 
 //          - Label fixed and variable expenses
 //          Todo: Determine if invoice is a fixed or variable expenses
+//          Step 2: Determine if input is one time invoice or reoccurring invoice
 
 //          - List monthly expenses
 //          Step 3: Automatically add or deduct reoccurring monthly expenses
