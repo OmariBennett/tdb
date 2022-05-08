@@ -62,7 +62,10 @@ const fs = require('fs');
 let ws_titles = [
 	['id', 'author', 'amount', 'date', 'modified', 'modified_Date', 'memo'],
 ];
-let filename = 'out.xlsb';
+let filename = 'testFile';
+let folderName = 'excel';
+let file = `./${filename}.xlsx`;
+const workbook = XLSX.utils.book_new();
 
 //          Step 1: Create a new workbook
 /**
@@ -76,11 +79,33 @@ let filename = 'out.xlsb';
  * This library enforces the requirement at write time, throwing errors if an empty workbook is passed to write functions.
  * @returns {object}
  */
-const createWorkbook = filename => {
+const createWorkbook = (workbook, filename) => {
 	try {
-		const workbook = XLSX.utils.book_new();
+		const path = `./projects/budget/${folderName}`;
 		//        Step 1a: Save workbook to local storage (local file system)
-		return XLSX.writeFile(workbook, filename); //? What dose this func returns? (my guess is an object)
+		createWorksheet('Test Excel Sheet', workbook, file);
+
+		fs.access(path, error => {
+			if (error) {
+				XLSX.writeFile(workbook, filename);
+				fs.mkdir(path, error => {
+					if (error) {
+						console.log(error);
+					} else {
+						console.log(`New ${folderName} Directory created successfully!`);
+					}
+				});
+
+				fs.rename(filename, `${path}/${filename}`, err => {
+					if (err) throw err;
+					console.log('Rename complete!');
+				});
+			} else {
+				console.log('Given Directory already exists!');
+			}
+		});
+
+		return;
 	} catch {
 		/*            The book_new utility function creates an empty workbook with no worksheets.
                   Spreadsheet software generally require at least one worksheet and enforce the requirement
@@ -109,7 +134,8 @@ const createWorksheet = (ws_title, workBook, file_name) => {
 	// Append Data to WorkBook
 	XLSX.utils.book_append_sheet(workBook, worksheet, ws_title);
 	// Create WorkBook
-	XLSX.writeFile(workBook, file_name);
+	// XLSX.writeFile(workBook, file_name);
+	return workBook;
 };
 
 //*              Append Worksheet to Workbook
@@ -236,3 +262,4 @@ const invoice = {
 	Modified_Date: '',
 	Memo: '',
 };
+createWorkbook(workbook, file);
