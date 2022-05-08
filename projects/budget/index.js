@@ -77,50 +77,50 @@ const workbook = XLSX.utils.book_new();
  * in the user interface.
  *
  * This library enforces the requirement at write time, throwing errors if an empty workbook is passed to write functions.
- * @returns {object}
+ * @returns
  */
 const createWorkbook = (workbook, filename) => {
 	try {
 		const path = `./projects/budget/${folderName}`;
-		//        Step 1a: Save workbook to local storage (local file system)
 		createWorksheet('Test Excel Sheet', workbook, file);
 
+		//        Step 1a: Save workbook to local storage (local file system)
 		fs.access(path, error => {
 			if (error) {
 				XLSX.writeFile(workbook, filename);
 				fs.mkdir(path, error => {
 					if (error) {
 						console.log(error);
-					} else {
-						console.log(`New ${folderName} Directory created successfully!`);
 					}
 				});
+				XLSX.writeFile(workbook, filename);
 
 				fs.rename(filename, `${path}/${filename}`, err => {
 					if (err) throw err;
-					console.log('Rename complete!');
+					console.log('Intialize new workbook.');
 				});
 			} else {
-				console.log('Given Directory already exists!');
+				XLSX.writeFile(workbook, filename);
+
+				fs.rename(filename, `${path}/${filename}`, err => {
+					if (err) throw err;
+					console.log('Intialize new workbook.');
+				});
 			}
 		});
-
 		return;
 	} catch {
-		/*            The book_new utility function creates an empty workbook with no worksheets.
-                  Spreadsheet software generally require at least one worksheet and enforce the requirement
-                  in the user interface. 
-                ! This library enforces the requirement at write time, throwing errors if an empty workbook 
-  !               is passed to write functions. */
 		console.error(
 			'Empty workbook with no worksheet was pass to the writeFile()',
+		);
+		console.error(
+			'This library enforces the requirement at write time, throwing errors if an empty workbook is passed to write functions.',
 		);
 	}
 };
 
 //             Todo: C.R.U.D workbook (Create, Read, Update, & Delete)
 //*              Create Worksheet
-
 /**
  *  Create a new worksheet.
  * @param {string} ws_title Name for the worksheet object
@@ -129,27 +129,24 @@ const createWorkbook = (workbook, filename) => {
  */
 const createWorksheet = (ws_title, workBook, file_name) => {
 	let ws_data = [...ws_titles];
-	// Append Data to Worksheet
 	let worksheet = XLSX.utils.aoa_to_sheet(ws_data);
-	// Append Data to WorkBook
+
 	XLSX.utils.book_append_sheet(workBook, worksheet, ws_title);
-	// Create WorkBook
-	// XLSX.writeFile(workBook, file_name);
 	return workBook;
 };
 
 //*              Append Worksheet to Workbook
 /**
  *  Append Worksheet to the workbook
- * @param {string} ws_title Name for the worksheet
+ * @param {object} workbook Workbook object
  * @param {array} worksheet Array of arrays in row-major order
- * @param {object} workBook Workbook object
+ * @param {string} title Name for the worksheet
  */
-function appendWorksheet(ws_title, worksheet, workBook) {
-	let ws_data = [...ws_titles, ...worksheet];
-	let newWorksheet = XLSX.utils.aoa_to_sheet(ws_data);
+function appendWorksheet(workbook, worksheet, title) {
+	const ws_data = [...ws_titles, ...worksheet];
+	const newWorksheet = XLSX.utils.json_to_sheet(ws_data);
 
-	XLSX.utils.book_append_sheet(workBook, newWorksheet, ws_title);
+	XLSX.utils.book_append_sheet(workbook, newWorksheet, title);
 }
 
 //*              Read Workbook data
@@ -263,3 +260,14 @@ const invoice = {
 	Memo: '',
 };
 createWorkbook(workbook, file);
+// console.log('Deleting Workbook...');
+// deleteWorkbook(`./projects/budget/${folderName}/${file}`);
+// console.log(
+// 	readWorkbook(`./projects/budget/${folderName}/${file}`).Sheets[
+// 		'Test Excel Sheet'
+// 	],
+// );
+// appendWorksheet(workbook, ['Hello', 'World', '!'], 'New work sheet');
+// appendWorksheet(workbook, ['Hello', 'World', '!'], 'New work sheet@2');
+// appendWorksheet(workbook, ['Hello', 'World', '!'], 'New work sheet@3');
+// appendWorksheet(workbook, ['Hello', 'World', '!'], 'New work sheet@4');
