@@ -92,6 +92,7 @@ const createWorkbook = filename => {
 		);
 	}
 };
+
 //             Todo: C.R.U.D workbook (Create, Read, Update, & Delete)
 //*              Create Worksheet
 
@@ -152,11 +153,12 @@ const deleteWorkbook = path => {
 	});
 };
 
-//          - Create a invoice
 //          Todo: C.R.U.D invoice (Create, Read, Update, & Delete)
 //          Step 2: Create Invoice
-//            Step 2a: Invoice: Id | Author | Amount | Date | Modified | Modified Date | Memo |
-//            Convert the string into a object 'Netflix bill 19.07 Jan 14'
+const newInvoice = () => {
+	//            Step 2a: Invoice: Id | Author | Amount | Date | Modified | Modified Date | Memo |
+	//            Convert the string into a object 'Netflix bill 19.07 Jan 14'
+};
 //            Net increase (pay stub, extra cash, ...)
 
 //          Step 2b: Get Invoice

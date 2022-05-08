@@ -4,8 +4,8 @@
   "description": "A space tbd",
   "main": "index.js",
   "scripts": {
-    "sheets": "npm run sheetsjs",
-    "sheetsjs": "node ./projects/budget/index.js",
+    "sheet": "npm run sheetjs",
+    "sheetjs": "nodemon ./projects/budget/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,5 +24,8 @@
   "homepage": "https://github.com/OmariBennett/tdb#readme",
   "dependencies": {
     "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
   }
 }
