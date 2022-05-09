@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/OmariBennett/tdb#readme",
   "dependencies": {
+    "uuid": "^8.3.2",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {

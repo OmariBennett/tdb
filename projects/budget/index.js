@@ -56,6 +56,88 @@
 //  Step  3. Pseudocode
 const XLSX = require('xlsx');
 const fs = require('fs');
+const { v4: uuidv4 } = require('uuid');
+
+const time = new Date();
+
+const seconds = time.getSeconds();
+const minutes = time.getMinutes();
+const hours = time.getHours(); //? Why the 'hour' variable is outputing a hour behind?
+
+const date = time.getDate();
+let month = null;
+switch (time.getMonth()) {
+	case 1:
+		month = 'February';
+		break;
+	case 2:
+		month = 'March';
+		break;
+	case 3:
+		month = 'April';
+		break;
+	case 4:
+		month = 'May';
+		break;
+	case 5:
+		month = 'June';
+		break;
+	case 6:
+		month = 'July';
+		break;
+	case 7:
+		month = 'August';
+		break;
+	case 8:
+		month = 'September';
+		break;
+	case 9:
+		month = 'October';
+		break;
+	case 10:
+		month = 'November';
+		break;
+	case 11:
+		month = 'December ';
+		break;
+
+	default:
+		month = 'January';
+		break;
+}
+const year = time.getFullYear();
+
+let dayOfTheWeek = null;
+switch (time.getDay()) {
+	case 1:
+		dayOfTheWeek = 'Monday';
+		break;
+	case 2:
+		dayOfTheWeek = 'Tuesday';
+		break;
+	case 3:
+		dayOfTheWeek = 'Wednesday';
+		break;
+	case 4:
+		dayOfTheWeek = 'Thursday';
+		break;
+	case 5:
+		dayOfTheWeek = 'Friday';
+		break;
+	case 6:
+		dayOfTheWeek = 'Saturday';
+		break;
+
+	default:
+		dayOfTheWeek = 'Sunday';
+		break;
+}
+
+const currentTime = `${hours}:${minutes}:${seconds}`;
+const currentDate = `${dayOfTheWeek} ${month} ${date}, ${year}`;
+const currentDate_Time = `${month} ${date}, ${year} ${currentTime}`;
+const currentFullDate_Time = `${dayOfTheWeek} ${month} ${date}, ${year} ${currentTime}`;
+
 //    Most scenarios involving spreadsheets and data can be broken into 5 parts:
 //      1. Acquire Data: Data may be stored anywhere: local or remote files,
 //          databases, HTML TABLE, or even generated programmatically in the web browser.
@@ -178,15 +260,32 @@ const deleteWorkbook = path => {
 
 //          Todo: C.R.U.D invoice (Create, Read, Update, & Delete)
 //          Step 2: Create Invoice
-const newInvoice = () => {
+const newInvoice = (
+	author,
+	amount,
+	Memo,
 	//            Step 2a: Invoice: Id | Author | Amount | Date | Modified | Modified Date | Memo |
 	//            Convert the string into a object 'Netflix bill 19.07 Jan 14'
-};
+) => ({
+	id: uuidv4(),
+	author,
+	amount,
+	date: currentDate_Time,
+	Modified: false,
+	Modified_Date: '',
+	Memo,
+});
+
 //            Net increase (pay stub, extra cash, ...)
 
 //          Step 2b: Get Invoice
 //          Step 2c: Update Invoice
 //          Step 2d: Delete Invoice
+//          Step 2e: Append Invoice to the worksheet
+const appendInvoiceToWorksheet = (workbook, invoice) => {
+	console.log(invoice);
+	console.log(workbook);
+};
 
 //      2. Extract Data: For spreadsheet files, this involves parsing raw bytes to read
 //          the cell data. For general JS data, this involves reshaping the data.
@@ -250,23 +349,14 @@ const newInvoice = () => {
 */
 
 console.log('hello world!');
-const invoice = {
-	id: 'ABC012',
-	author: 'Netflix',
-	amount: '19.07',
-	date: 'Jan 14',
-	Modified: false,
-	Modified_Date: '',
-	Memo: '',
-};
-createWorkbook(workbook, file);
+const excel_File = readWorkbook(`./projects/budget/${folderName}/${file}`)
+	.Sheets['Test Excel Sheet'];
+const Netflix = newInvoice('Netflix', 19.07, '');
+
+appendInvoiceToWorksheet(excel_File, Netflix);
+// createWorkbook(workbook, file);
 // console.log('Deleting Workbook...');
 // deleteWorkbook(`./projects/budget/${folderName}/${file}`);
-// console.log(
-// 	readWorkbook(`./projects/budget/${folderName}/${file}`).Sheets[
-// 		'Test Excel Sheet'
-// 	],
-// );
 // appendWorksheet(workbook, ['Hello', 'World', '!'], 'New work sheet');
 // appendWorksheet(workbook, ['Hello', 'World', '!'], 'New work sheet@2');
 // appendWorksheet(workbook, ['Hello', 'World', '!'], 'New work sheet@3');
