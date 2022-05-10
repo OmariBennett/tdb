@@ -283,8 +283,23 @@ const newInvoice = (
 //          Step 2d: Delete Invoice
 //          Step 2e: Append Invoice to the worksheet
 const appendInvoiceToWorksheet = (workbook, invoice) => {
-	console.log(invoice);
-	console.log(workbook);
+	// console.log(workbook.Sheets['Test Excel Sheet']); // Worksheet object);
+	const wb = workbook.Sheets;
+	const ws_name = workbook.SheetNames[0];
+	const sheet = workbook.Sheets[ws_name]; // Worksheet object
+	//  G1: { t: 's', v: 'memo', h: 'memo', w: 'memo' }
+	// console.log({H1: { t: 's', v: 'memo', h: 'memo', w: 'memo' } });
+	let lastWorkbookObjectKey = null;
+	// console.log(wb);
+
+	// console.log(invoice);
+	// console.log(wb);
+	// console.log(ws_name);
+	// console.log(String.fromCharCode(65));
+	// console.log(Object.getOwnPropertyNames(sheet));
+	// sheet.H1 =
+
+	// XLSX.utils.book_append_sheet(workbook, worksheet, sheet_name);
 };
 
 //      2. Extract Data: For spreadsheet files, this involves parsing raw bytes to read
@@ -349,8 +364,8 @@ const appendInvoiceToWorksheet = (workbook, invoice) => {
 */
 
 console.log('hello world!');
-const excel_File = readWorkbook(`./projects/budget/${folderName}/${file}`)
-	.Sheets['Test Excel Sheet'];
+const excel_File = readWorkbook(`./projects/budget/${folderName}/${file}`);
+
 const Netflix = newInvoice('Netflix', 19.07, '');
 
 appendInvoiceToWorksheet(excel_File, Netflix);
