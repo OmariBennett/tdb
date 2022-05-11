@@ -149,6 +149,44 @@ let folderName = 'excel';
 let file = `./${filename}.xlsx`;
 const workbook = XLSX.utils.book_new();
 
+const increment = number => number++;
+
+// console.log(String.fromCodePoint(0x1f303));  //* "Night with Stars": UTF-16
+/**
+ * Increment the letter A through Z
+ *
+ * ex: fn( A ) => B
+ * @param {string} string A letter A through Z
+ * @returns {string}
+ */
+const incrementAlphabet = string => {
+	let newLetter = null;
+	const letter = string.toUpperCase().charCodeAt(0);
+
+	if (letter < 65 || letter > 90)
+		console.log(
+			'Warning: The string provided needs to be between A through  Z.',
+		);
+
+	newLetter = letter + 1;
+
+	if (newLetter >= 91) newLetter = 65;
+
+	return String.fromCharCode(newLetter);
+};
+
+const incrementWorksheetCell = worksheet => {
+	// console.log(`${column}${row}`);
+	// Ex: A1 - worksheet cell coordinate
+	console.log(worksheet);
+	console.log(Object.getOwnPropertyNames(worksheet));
+	console.log(Object.getOwnPropertyNames(worksheet).pop());
+	console.log(typeof Object.getOwnPropertyNames(worksheet).pop());
+
+	const cellCoordinate = Object.getOwnPropertyNames(worksheet).pop();
+	console.log({ cellCoordinate });
+};
+
 //          Step 1: Create a new workbook
 /**
  *  Create a new workbook.
@@ -283,21 +321,18 @@ const newInvoice = (
 //          Step 2d: Delete Invoice
 //          Step 2e: Append Invoice to the worksheet
 const appendInvoiceToWorksheet = (workbook, invoice) => {
-	// console.log(workbook.Sheets['Test Excel Sheet']); // Worksheet object);
 	const wb = workbook.Sheets;
 	const ws_name = workbook.SheetNames[0];
-	const sheet = workbook.Sheets[ws_name]; // Worksheet object
+	const worksheet = workbook.Sheets[ws_name];
 	//  G1: { t: 's', v: 'memo', h: 'memo', w: 'memo' }
 	// console.log({H1: { t: 's', v: 'memo', h: 'memo', w: 'memo' } });
 	let lastWorkbookObjectKey = null;
-	// console.log(wb);
 
+	incrementWorksheetCell(worksheet);
 	// console.log(invoice);
 	// console.log(wb);
 	// console.log(ws_name);
-	// console.log(String.fromCharCode(65));
-	// console.log(Object.getOwnPropertyNames(sheet));
-	// sheet.H1 =
+	// console.log(worksheet);
 
 	// XLSX.utils.book_append_sheet(workbook, worksheet, sheet_name);
 };
@@ -363,7 +398,7 @@ const appendInvoiceToWorksheet = (workbook, invoice) => {
       todo - submit new invoice form (repeating)
 */
 
-console.log('hello world!');
+console.log('Initialising...');
 const excel_File = readWorkbook(`./projects/budget/${folderName}/${file}`);
 
 const Netflix = newInvoice('Netflix', 19.07, '');
