@@ -149,7 +149,10 @@ let folderName = 'excel';
 let file = `./${filename}.xlsx`;
 const workbook = XLSX.utils.book_new();
 
-const increment = number => number++;
+const increment = number => {
+	let num = parseInt(number);
+	return (num += 1);
+};
 
 // console.log(String.fromCodePoint(0x1f303));  //* "Night with Stars": UTF-16
 /**
@@ -175,18 +178,86 @@ const incrementAlphabet = string => {
 	return String.fromCharCode(newLetter);
 };
 
-const incrementWorksheetCell = worksheet => {
-	// console.log(`${column}${row}`);
+const incrementCell_Row = worksheet => {
 	// Ex: A1 - worksheet cell coordinate
-	console.log(worksheet);
-	console.log(Object.getOwnPropertyNames(worksheet));
-	console.log(Object.getOwnPropertyNames(worksheet).pop());
-	console.log(typeof Object.getOwnPropertyNames(worksheet).pop());
-
 	const cellCoordinate = Object.getOwnPropertyNames(worksheet).pop();
-	console.log({ cellCoordinate });
+	const column = cellCoordinate[0];
+	const row = cellCoordinate[1];
+	const nextColumn = incrementAlphabet(column);
+	const nextCellCoordinate = `${nextColumn}${row}`;
+	return nextCellCoordinate;
+};
+const incrementCell_Column = (string, bool = false) => {
+	// Ex: A1 - worksheet cell coordinate
+	const cellCoordinate = string;
+	const column = cellCoordinate[0];
+	const row = cellCoordinate[1];
+	const nextRow = increment(row);
+	// console.log(bool ? 'A1' : `${column}${nextRow}`);
+	const nextCellCoordinate = bool ? `A${nextRow}` : `${column}${nextRow}`;
+	return nextCellCoordinate;
 };
 
+const createCellRow = (worksheet, invoice) => {
+	/* Workbook object ex:
+{
+  '!ref': 'A1:G1',
+  A1: { t: 's', v: 'id', h: 'id', w: 'id' },      
+  B1: { t: 's', v: 'author', h: 'author', w: 'author' },
+  C1: { t: 's', v: 'amount', h: 'amount', w: 'amount' },
+  D1: { t: 's', v: 'date', h: 'date', w: 'date' },  E1: { t: 's', v: 'modified', h: 'modified', w: 'modified' },
+  F1: {
+    t: 's',
+    v: 'modified_Date',
+    h: 'modified_Date',
+    w: 'modified_Date'
+  },
+  G1: { t: 's', v: 'memo', h: 'memo', w: 'memo' } 
+}*/
+
+	//  last cell coordinate: G1: { t: 's', v: 'memo', h: 'memo', w: 'memo' }
+	// 	next cell coordinate:	A2: { t: 's', v: 'memo', h: 'memo', w: 'memo' }
+	// 	next cell coordinate:	B2: { t: 's', v: 'memo', h: 'memo', w: 'memo' }
+	const previousCellCoordinate = Object.getOwnPropertyNames(worksheet).pop();
+	// console.log({ previousCellCoordinate });
+	let cellCoordinate = incrementCell_Column(previousCellCoordinate, true);
+	let nextCellCoordinate;
+	// console.log(Object.values(invoice));
+	// console.log(incrementCell_Column(cellCoordinate, true));
+
+	// console.log(cellCoordinate);
+	for (let i = 0; i < Object.values(invoice).length; i++) {
+		const element = Object.values(invoice)[i];
+		nextCellCoordinate = incrementCell_Column(cellCoordinate);
+		// console.log(element);
+		console.log(nextCellCoordinate);
+		console.log({ [cellCoordinate]: '' });
+	}
+
+	for (const key in invoice) {
+		if (Object.hasOwnProperty.call(invoice, key)) {
+			const element = invoice[key];
+			// nextCellCoordinate = incrementCell_Column(cellCoordinate);
+			// console.log(nextCellCoordinate);
+			// console.log({
+			// 	[nextCellCoordinate]: {
+			// 		t: 's',
+			// 		// v: element,
+			// 		// h: element,
+			// 		// w: element,
+			// 	},
+			// });
+		}
+	}
+	// console.log({
+	// 	[cellCoordinate]: {
+	// 		t: 's',
+	// 		v: invoice.author,
+	// 		h: invoice.author,
+	// 		w: invoice.author,
+	// 	},
+	// });
+};
 //          Step 1: Create a new workbook
 /**
  *  Create a new workbook.
@@ -324,11 +395,8 @@ const appendInvoiceToWorksheet = (workbook, invoice) => {
 	const wb = workbook.Sheets;
 	const ws_name = workbook.SheetNames[0];
 	const worksheet = workbook.Sheets[ws_name];
-	//  G1: { t: 's', v: 'memo', h: 'memo', w: 'memo' }
-	// console.log({H1: { t: 's', v: 'memo', h: 'memo', w: 'memo' } });
 	let lastWorkbookObjectKey = null;
-
-	incrementWorksheetCell(worksheet);
+	createCellRow(worksheet, invoice);
 	// console.log(invoice);
 	// console.log(wb);
 	// console.log(ws_name);
