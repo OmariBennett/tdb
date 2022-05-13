@@ -192,72 +192,11 @@ const incrementCell_Column = (string, bool = false) => {
 	const cellCoordinate = string;
 	const column = cellCoordinate[0];
 	const row = cellCoordinate[1];
+	const nextColumn = incrementAlphabet(column);
 	const nextRow = increment(row);
-	// console.log(bool ? 'A1' : `${column}${nextRow}`);
-	const nextCellCoordinate = bool ? `A${nextRow}` : `${column}${nextRow}`;
-	return nextCellCoordinate;
+	return bool ? `A${nextRow}` : `${nextColumn}${row}`;
 };
 
-const createCellRow = (worksheet, invoice) => {
-	/* Workbook object ex:
-{
-  '!ref': 'A1:G1',
-  A1: { t: 's', v: 'id', h: 'id', w: 'id' },      
-  B1: { t: 's', v: 'author', h: 'author', w: 'author' },
-  C1: { t: 's', v: 'amount', h: 'amount', w: 'amount' },
-  D1: { t: 's', v: 'date', h: 'date', w: 'date' },  E1: { t: 's', v: 'modified', h: 'modified', w: 'modified' },
-  F1: {
-    t: 's',
-    v: 'modified_Date',
-    h: 'modified_Date',
-    w: 'modified_Date'
-  },
-  G1: { t: 's', v: 'memo', h: 'memo', w: 'memo' } 
-}*/
-
-	//  last cell coordinate: G1: { t: 's', v: 'memo', h: 'memo', w: 'memo' }
-	// 	next cell coordinate:	A2: { t: 's', v: 'memo', h: 'memo', w: 'memo' }
-	// 	next cell coordinate:	B2: { t: 's', v: 'memo', h: 'memo', w: 'memo' }
-	const previousCellCoordinate = Object.getOwnPropertyNames(worksheet).pop();
-	// console.log({ previousCellCoordinate });
-	let cellCoordinate = incrementCell_Column(previousCellCoordinate, true);
-	let nextCellCoordinate;
-	// console.log(Object.values(invoice));
-	// console.log(incrementCell_Column(cellCoordinate, true));
-
-	// console.log(cellCoordinate);
-	for (let i = 0; i < Object.values(invoice).length; i++) {
-		const element = Object.values(invoice)[i];
-		nextCellCoordinate = incrementCell_Column(cellCoordinate);
-		// console.log(element);
-		console.log(nextCellCoordinate);
-		console.log({ [cellCoordinate]: '' });
-	}
-
-	for (const key in invoice) {
-		if (Object.hasOwnProperty.call(invoice, key)) {
-			const element = invoice[key];
-			// nextCellCoordinate = incrementCell_Column(cellCoordinate);
-			// console.log(nextCellCoordinate);
-			// console.log({
-			// 	[nextCellCoordinate]: {
-			// 		t: 's',
-			// 		// v: element,
-			// 		// h: element,
-			// 		// w: element,
-			// 	},
-			// });
-		}
-	}
-	// console.log({
-	// 	[cellCoordinate]: {
-	// 		t: 's',
-	// 		v: invoice.author,
-	// 		h: invoice.author,
-	// 		w: invoice.author,
-	// 	},
-	// });
-};
 //          Step 1: Create a new workbook
 /**
  *  Create a new workbook.
@@ -386,7 +325,7 @@ const newInvoice = (
 });
 
 //            Net increase (pay stub, extra cash, ...)
-
+const appendToWorksheet = () => {};
 //          Step 2b: Get Invoice
 //          Step 2c: Update Invoice
 //          Step 2d: Delete Invoice
@@ -395,14 +334,49 @@ const appendInvoiceToWorksheet = (workbook, invoice) => {
 	const wb = workbook.Sheets;
 	const ws_name = workbook.SheetNames[0];
 	const worksheet = workbook.Sheets[ws_name];
-	let lastWorkbookObjectKey = null;
-	createCellRow(worksheet, invoice);
+	let nextCellCoordinate;
+
+	// Increment Cell Column
+	for (let i = 0; i < Object.values(invoice).length; i++) {
+		const element = Object.values(invoice)[i];
+		if (i === 0) {
+			nextCellCoordinate = incrementCell_Column('A1', true);
+		} else {
+			nextCellCoordinate = incrementCell_Column(nextCellCoordinate);
+		}
+
+		XLSX.utils.sheet_add_aoa(worksheet, [[element]], {
+			origin: nextCellCoordinate,
+		}); // append to the worksheet
+	}
+
+	// console.log(newCellRow);
 	// console.log(invoice);
 	// console.log(wb);
 	// console.log(ws_name);
-	// console.log(worksheet);
+	console.log(worksheet);
 
-	// XLSX.utils.book_append_sheet(workbook, worksheet, sheet_name);
+	//! console.log statement:
+	// 	Deleting Workbook...
+	// 	file removed!
+	// 	Intialize new workbook.
+	//? Why does the application crash when re-creating a new excel worksheet?
+	//* C:\Users\jelan\Documents\_TBD\node_modules\xlsx\xlsx.js:24227
+	//   	if(wb.SheetNames.indexOf(name) >= 0)
+	// 		throw new Error("Worksheet with name |" + name + "| already exists!");
+
+	//! 	Error: Worksheet with name |Test Excel Sheet| already exists!
+	//!    	at Object.book_append_sheet (C:\Users\jelan\Documents\_TBD\node_modules\xlsx\xlsx.js:24227:45)
+	//!   	  at Timeout._onTimeout (C:\Users\jelan\Documents\_TBD\projects\budget\index.js:361:21)
+	//!     	at listOnTimeout (node:internal/timers:556:17)
+	//!     	at processTimers (node:internal/timers:499:7)
+	//! 	[nodemon] app crashed - waiting for file changes before starting...
+
+	// console.log('Deleting Workbook...');
+	// deleteWorkbook('./projects/budget/excel/testFile.xlsx');
+	// setInterval(() => {
+	// 	return XLSX.utils.book_append_sheet(workbook, worksheet, ws_name);
+	// }, 2000);
 };
 
 //      2. Extract Data: For spreadsheet files, this involves parsing raw bytes to read
@@ -467,12 +441,13 @@ const appendInvoiceToWorksheet = (workbook, invoice) => {
 */
 
 console.log('Initialising...');
+createWorkbook(workbook, file);
 const excel_File = readWorkbook(`./projects/budget/${folderName}/${file}`);
 
 const Netflix = newInvoice('Netflix', 19.07, '');
 
 appendInvoiceToWorksheet(excel_File, Netflix);
-// createWorkbook(workbook, file);
+
 // console.log('Deleting Workbook...');
 // deleteWorkbook(`./projects/budget/${folderName}/${file}`);
 // appendWorksheet(workbook, ['Hello', 'World', '!'], 'New work sheet');
