@@ -337,46 +337,37 @@ const appendInvoiceToWorksheet = (workbook, invoice) => {
 	let nextCellCoordinate;
 
 	// Increment Cell Column
-	for (let i = 0; i < Object.values(invoice).length; i++) {
-		const element = Object.values(invoice)[i];
-		if (i === 0) {
-			nextCellCoordinate = incrementCell_Column('A1', true);
-		} else {
-			nextCellCoordinate = incrementCell_Column(nextCellCoordinate);
-		}
+	// for (let i = 0; i < Object.values(invoice).length; i++) {
+	// 	const element = Object.values(invoice)[i];
+	// 	if (i === 0) {
+	// 		nextCellCoordinate = incrementCell_Column('A1', true);
+	// 	} else {
+	// 		nextCellCoordinate = incrementCell_Column(nextCellCoordinate);
+	// 	}
 
-		XLSX.utils.sheet_add_aoa(worksheet, [[element]], {
-			origin: nextCellCoordinate,
-		}); // append to the worksheet
-	}
+	// 	XLSX.utils.sheet_add_aoa(worksheet, [[element]], {
+	// 		origin: nextCellCoordinate,
+	// 	}); // append to the worksheet
+	// }
 
 	// console.log(newCellRow);
 	// console.log(invoice);
 	// console.log(wb);
 	// console.log(ws_name);
-	console.log(worksheet);
-
-	//! console.log statement:
-	// 	Deleting Workbook...
-	// 	file removed!
-	// 	Intialize new workbook.
-	//? Why does the application crash when re-creating a new excel worksheet?
-	//* C:\Users\jelan\Documents\_TBD\node_modules\xlsx\xlsx.js:24227
-	//   	if(wb.SheetNames.indexOf(name) >= 0)
-	// 		throw new Error("Worksheet with name |" + name + "| already exists!");
-
-	//! 	Error: Worksheet with name |Test Excel Sheet| already exists!
-	//!    	at Object.book_append_sheet (C:\Users\jelan\Documents\_TBD\node_modules\xlsx\xlsx.js:24227:45)
-	//!   	  at Timeout._onTimeout (C:\Users\jelan\Documents\_TBD\projects\budget\index.js:361:21)
-	//!     	at listOnTimeout (node:internal/timers:556:17)
-	//!     	at processTimers (node:internal/timers:499:7)
-	//! 	[nodemon] app crashed - waiting for file changes before starting...
-
-	// console.log('Deleting Workbook...');
-	// deleteWorkbook('./projects/budget/excel/testFile.xlsx');
-	// setInterval(() => {
-	// 	return XLSX.utils.book_append_sheet(workbook, worksheet, ws_name);
-	// }, 2000);
+	// console.log(worksheet);
+	// XLSX.utils.sheet_add_aoa(worksheet, [['new_value']], { origin: 'H1' });
+	// XLSX.utils.sheet_add_aoa(worksheet, [['replace_value']], { origin: 'D1' });
+	// XLSX.utils.sheet_add_aoa(worksheet, [['hola world!']], { origin: 'A2' });
+	// XLSX.utils.sheet_add_aoa(worksheet, [[true]], { origin: 'B2' });
+	// XLSX.utils.sheet_add_aoa(worksheet, [[3]], { origin: 'C2' });
+	// console.log(worksheet);
+	// XLSX.writeFile(workbook, filename, { bookType: 'xlsx', type: 'array' });
+	// XLSX.writeFile(workbook, 'testFile.xlsx', {
+	// 	bookType: 'xlsx',
+	// });
+	// XLSX.writeFile(wb, 'testFile.xlsx');
+	// console.log(wb);
+	// console.log(workbook.Sheets);
 };
 
 //      2. Extract Data: For spreadsheet files, this involves parsing raw bytes to read
@@ -441,12 +432,12 @@ const appendInvoiceToWorksheet = (workbook, invoice) => {
 */
 
 console.log('Initialising...');
-createWorkbook(workbook, file);
-const excel_File = readWorkbook(`./projects/budget/${folderName}/${file}`);
+// createWorkbook(workbook, file);
+// const excel_File = readWorkbook(`./projects/budget/${folderName}/${file}`);
 
-const Netflix = newInvoice('Netflix', 19.07, '');
+// const Netflix = newInvoice('Netflix', 19.07, '');
 
-appendInvoiceToWorksheet(excel_File, Netflix);
+// appendInvoiceToWorksheet(excel_File, Netflix);
 
 // console.log('Deleting Workbook...');
 // deleteWorkbook(`./projects/budget/${folderName}/${file}`);
