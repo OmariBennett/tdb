@@ -177,13 +177,14 @@ const incrementAlphabet = string => {
 
 	return String.fromCharCode(newLetter);
 };
-
 const incrementCell_Row = worksheet => {
 	// Ex: A1 - worksheet cell coordinate
 	const cellCoordinate = Object.getOwnPropertyNames(worksheet).pop();
-	const column = cellCoordinate[0];
-	const row = cellCoordinate[1];
-	const nextColumn = incrementAlphabet(column);
+	// const column = cellCoordinate[0];
+	// const row = cellCoordinate[1];
+	const column = cellCoordinate;
+	const row = cellCoordinate;
+	const nextColumn = incrementAlphabet('1');
 	const nextCellCoordinate = `${nextColumn}${row}`;
 	return nextCellCoordinate;
 };
@@ -196,10 +197,7 @@ const incrementCell_Column = (string, bool = false) => {
 	const nextRow = increment(row);
 	return bool ? `A${nextRow}` : `${nextColumn}${row}`;
 };
-
-//          Step 1: Create a new workbook
-/**
- *  Create a new workbook.
+/** Create a new workbook.
  * @param {string} filename Name for the file with file extension. ex: 'file_name.xlsx'
  *
  * The book_new utility function creates an empty workbook with no worksheets.
@@ -248,11 +246,7 @@ const createWorkbook = (workbook, filename) => {
 		);
 	}
 };
-
-//             Todo: C.R.U.D workbook (Create, Read, Update, & Delete)
-//*              Create Worksheet
-/**
- *  Create a new worksheet.
+/** Create a new worksheet.
  * @param {string} ws_title Name for the worksheet object
  * @param {object} workBook Workbook object
  * @param {string} file_name Name for the file with file extension. ex: 'file_name.xlsx'
@@ -264,10 +258,7 @@ const createWorksheet = (ws_title, workBook, file_name) => {
 	XLSX.utils.book_append_sheet(workBook, worksheet, ws_title);
 	return workBook;
 };
-
-//*              Append Worksheet to Workbook
-/**
- *  Append Worksheet to the workbook
+/** Append Worksheet to the workbook
  * @param {object} workbook Workbook object
  * @param {array} worksheet Array of arrays in row-major order
  * @param {string} title Name for the worksheet
@@ -278,10 +269,7 @@ function appendWorksheet(workbook, worksheet, title) {
 
 	XLSX.utils.book_append_sheet(workbook, newWorksheet, title);
 }
-
-//*              Read Workbook data
-/**
- * Read workbook
+/** Read Workbook data
  * @param {string} filePath Read a spreadsheet file at the supplied
  * path. Browsers generally do not allow reading files in this way
  * (it is deemed a security risk), and attempts to read files in
@@ -290,9 +278,7 @@ function appendWorksheet(workbook, worksheet, title) {
  * @return {object}
  */
 const readWorkbook = filePath => XLSX.readFile(filePath);
-
-//*              Delete Workbook
-/**
+/** Delete Workbook
  * Delete workbook from the file directory
  * @param {string} path The file path of the workbook
  */
@@ -306,8 +292,6 @@ const deleteWorkbook = path => {
 	});
 };
 
-//          Todo: C.R.U.D invoice (Create, Read, Update, & Delete)
-//          Step 2: Create Invoice
 const newInvoice = (
 	author,
 	amount,
@@ -324,12 +308,6 @@ const newInvoice = (
 	Memo,
 });
 
-//            Net increase (pay stub, extra cash, ...)
-const appendToWorksheet = () => {};
-//          Step 2b: Get Invoice
-//          Step 2c: Update Invoice
-//          Step 2d: Delete Invoice
-//          Step 2e: Append Invoice to the worksheet
 const appendInvoiceToWorksheet = (workbook, invoice) => {
 	const wb = workbook.Sheets;
 	const ws_name = workbook.SheetNames[0];
@@ -355,21 +333,71 @@ const appendInvoiceToWorksheet = (workbook, invoice) => {
 	// console.log(wb);
 	// console.log(ws_name);
 	// console.log(worksheet);
-	// XLSX.utils.sheet_add_aoa(worksheet, [['new_value']], { origin: 'H1' });
-	// XLSX.utils.sheet_add_aoa(worksheet, [['replace_value']], { origin: 'D1' });
-	// XLSX.utils.sheet_add_aoa(worksheet, [['hola world!']], { origin: 'A2' });
-	// XLSX.utils.sheet_add_aoa(worksheet, [[true]], { origin: 'B2' });
-	// XLSX.utils.sheet_add_aoa(worksheet, [[3]], { origin: 'C2' });
+	XLSX.utils.sheet_add_aoa(worksheet, [['new_value']], { origin: 'H1' });
+	XLSX.utils.sheet_add_aoa(worksheet, [['replace_value']], { origin: 'D1' });
+	XLSX.utils.sheet_add_aoa(worksheet, [['hola world!']], { origin: 'A2' });
+	XLSX.utils.sheet_add_aoa(worksheet, [[true]], { origin: 'B2' });
+	XLSX.utils.sheet_add_aoa(worksheet, [[3]], { origin: 'C2' });
 	// console.log(worksheet);
 	// XLSX.writeFile(workbook, filename, { bookType: 'xlsx', type: 'array' });
-	// XLSX.writeFile(workbook, 'testFile.xlsx', {
-	// 	bookType: 'xlsx',
-	// });
+	XLSX.writeFile(workbook, 'testFile.xlsx', {
+		bookType: 'xlsx',
+	});
 	// XLSX.writeFile(wb, 'testFile.xlsx');
 	// console.log(wb);
-	// console.log(workbook.Sheets);
+	console.log(workbook.Sheets);
+
+	//? Why does the application crash when re-creating a new excel worksheet?
+	//! console.log statement:
+	// 	Deleting Workbook...
+	// 	file removed!
+	// 	Intialize new workbook.
+
+	//* C:\Users\jelan\Documents\_TBD\node_modules\xlsx\xlsx.js:24227
+	//   	if(wb.SheetNames.indexOf(name) >= 0)
+	// 		throw new Error("Worksheet with name |" + name + "| already exists!");
+
+	//! 	Error: Worksheet with name |Test Excel Sheet| already exists!
+	//!    	at Object.book_append_sheet (C:\Users\jelan\Documents\_TBD\node_modules\xlsx\xlsx.js:24227:45)
+	//!   	  at Timeout._onTimeout (C:\Users\jelan\Documents\_TBD\projects\budget\index.js:361:21)
+	//!     	at listOnTimeout (node:internal/timers:556:17)
+	//!     	at processTimers (node:internal/timers:499:7)
+	//! 	[nodemon] app crashed - waiting for file changes before starting...
+
+	// console.log('Deleting Workbook...');
+	// deleteWorkbook('./projects/budget/excel/testFile.xlsx');
+	// setInterval(() => {
+	// 	return XLSX.utils.book_append_sheet(workbook, worksheet, ws_name);
+	// }, 2000);
 };
 
+/**
+ * ===============================================================================================================================
+ * ===============================================================================================================================
+ * ===============================================================================================================================
+ * ===============================================================================================================================
+ * ===============================================================================================================================
+ *
+ * **/
+//    Most scenarios involving spreadsheets and data can be broken into 5 parts:
+//      1. Acquire Data: Data may be stored anywhere: local or remote files,
+//          databases, HTML TABLE, or even generated programmatically in the web browser.
+//          Step 1: Create a new workbook
+//            Step 1a: Save workbook to local storage (local file system)
+//             Todo: C.R.U.D workbook (Create, Read, Update, & Delete)
+//*              Create Worksheet
+//*              Append Worksheet to Workbook
+//*              Read Workbook data
+//*              Delete Workbook
+//          Step 2: Create Invoice
+//              Todo: C.R.U.D invoice (Create, Read, Update, & Delete)
+//            Step 2a: Invoice: Id | Author | Amount | Date | Modified | Modified Date | Memo |
+//             Convert the string into a object 'Netflix bill 19.07 Jan 14'
+//             Net increase (pay stub, extra cash, ...)
+//          Step 2b: Get Invoice
+//          Step 2c: Update Invoice
+//          Step 2d: Delete Invoice
+//          Step 2e: Append Invoice to the worksheet
 //      2. Extract Data: For spreadsheet files, this involves parsing raw bytes to read
 //          the cell data. For general JS data, this involves reshaping the data.
 
