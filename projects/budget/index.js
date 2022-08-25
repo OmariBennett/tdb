@@ -59,6 +59,7 @@ const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 const csvdata = require('csvdata');
 const { get } = require('http');
+const path = require('path');
 
 const time = new Date();
 
@@ -137,7 +138,7 @@ switch (time.getDay()) {
 
 const currentTime = `${hours}:${minutes}:${seconds}`;
 const currentDate = `${dayOfTheWeek} ${month} ${date}, ${year}`;
-const currentDate_Time = `${month} ${date}, ${year} ${currentTime}`;
+const currentDate_Time = `${month} ${date}-${year} ${currentTime}`;
 const currentFullDate_Time = `${dayOfTheWeek} ${month} ${date}, ${year} ${currentTime}`;
 const currentMonth = time.getMonth() + 1;
 const formatedMonth = currentMonth < 10 ? `0${currentMonth}` : currentMonth;
@@ -232,6 +233,27 @@ function createInvoice(path) {
 }
 
 //          Step 2b: Get Invoice
+async function readInvoice(path) {
+	const response = await csvdata.load(path, {
+		delimiter: ',',
+		encoding: 'utf8',
+		log: true,
+		objName: undefined,
+		parse: true,
+		stream: false,
+	});
+	let newInvoices = [];
+	response.map(invoice => {
+		newInvoices = [...newInvoices, invoice];
+	});
+	console.log(newInvoices);
+	return newInvoices;
+}
+
+const FILE_PATH =
+	'./projects/budget/invoices/2022/quarterly-02/logs-08-2022.csv';
+readInvoice(FILE_PATH);
+
 //          Step 2c: Update Invoice
 //            Step 2b: Add reoccurring monthly expenses to the csv log
 //             Net increase (pay stub, extra cash, ...)
