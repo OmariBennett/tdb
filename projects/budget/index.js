@@ -252,24 +252,68 @@ let reoccurringInvoice = [Netflix, Hulu, CrunchyRoll];
 
 const FILE_PATH =
 	'./projects/budget/invoices/2022/quarterly-02/logs-08-2022.csv';
-// readInvoice(FILE_PATH);
-// Create, Write, Save, Update File
-// {header: 'age,hair,name'}
-// {empty: true, header: 'name,hair,age'}
-const writeFile = (filePath, data, options) =>
-	csvdata.write(filePath, data, options);
+/**
+ * @description Returns a promise, eventually fulfilled when done writing data to "filePath"
+ * (be careful, as it overwrites existing files).
+ * @param {string} filePath Reads data from "filePath" (the first line of the CSV file must contain headers).
+ * @param data
+ * @param {object} options options argument is a configuration object with the following default values.
+ * @example 'options argument default values :' {
+ * append: false,
+ * delimiter: ',',
+ * empty: false,
+ * encoding: 'utf8',
+ * header: '',
+ * log: true
+ *}
+ * @example 'data argument types':
+ * 'String (e.g. 'a,b,c\nd,e,f')'
+ * 'Array of arrays (e.g.' [['a','b','c'],['d','e','f']]')'
+ * 'Array of objects (e.g.' [{amount: 100, name: 'John'}, {amount: 130, name: 'Paul'}]')'
+ * 'Object containing objects (e.g.' {John: {amount: '100', name: 'John' }, Paul: {amount: '130', name: 'Paul'}}')'
+ * @example 'data examples'
+ * {header: 'age,hair,name'}
+ * {empty: true, header: 'name,hair,age'}
+ */
+const writeFile = async (filePath, data, options = null) => {
+	if (options === null) {
+		return console.log('Wraining: CSV file must contain a header');
+	}
+	return csvdata.write(filePath, data, options);
+};
 
 // Delete File
+/**
+ * @param {string} filePath Reads data from "filePath"
+ */
 const deleteFile = filePath =>
 	fs.unlink(filePath, err => {
 		if (err) throw err;
 		console.log(`${filePath} was deleted`);
 	});
 
-// Read File
-const readFile = (filePath, name) => csvdata.load(filePath, { objName: name });
+/**
+ * @description Returns a promise, eventually fulfilled with an array where each item is an object that contains data from a row
+ * @param {string} filePath Reads data from "filePath" (the first line of the CSV file must contain headers).
+ * @param {object} options options argument is a configuration object with the following default values.
+ * @example 'options argument default values :' {
+ * delimiter: ',',
+ * encoding: 'utf8',
+ * log: true,
+ * objName: undefined,
+ * parse: true,
+ * stream: false
+ *}
+ * @example  'CSV file header example: ' {objName: 'string'}
+ */
+const readCSVFile = async (filePath, options = null) =>
+	options != null
+		? await csvdata.load(filePath)
+		: await csvdata.load(filePath, options);
 
-// Create Folder
+/**
+ * @param {string} filePath filePath Reads data from "filePath"
+ */
 const createFolder = filePath => {
 	fs.mkdir(filePath, error => {
 		if (error) {
@@ -279,7 +323,9 @@ const createFolder = filePath => {
 	console.log(`${filePath} directory was created`);
 };
 
-// Delete Folder
+/**
+ * @param {string} filePath filePath Reads data from "filePath"
+ */
 const deleteFolder = filePath =>
 	fs.rmdir(filePath, function (error) {
 		if (error) {
