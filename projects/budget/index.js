@@ -155,9 +155,9 @@ const newInvoice = (author, amount, Memo) => ({
 	Modified_Date: '',
 	Memo,
 });
-const Netflix = newInvoice('Netflix', 19.07, '');
-const Hulu = newInvoice('Hulu', 12.07, '');
-const CrunchyRoll = newInvoice('CrunchyRoll', 35.97, '');
+const Netflix = newInvoice('Netflix', 19.07, 'invoice memo');
+const Hulu = newInvoice('Hulu', 12.07, 'invoice memo');
+const CrunchyRoll = newInvoice('CrunchyRoll', 35.97, 'invoice memo');
 const invoiceHeader = 'id,author,amount,date,Modified,Modified_Date,Memo';
 let reoccurringInvoice = [Netflix, Hulu, CrunchyRoll];
 
@@ -250,8 +250,7 @@ let reoccurringInvoice = [Netflix, Hulu, CrunchyRoll];
 // 	return newInvoices;
 // }
 
-const FILE_PATH =
-	'./projects/budget/invoices/2022/quarterly-02/logs-08-2022.csv';
+const FILE_PATH = `./duplicate-invoice.csv`; // `./projects/budget/invoices/2022/quarterly-02/logs-08-2022.csv`;
 /**
  * @description Returns a promise, eventually fulfilled when done writing data to "filePath"
  * (be careful, as it overwrites existing files).
@@ -306,11 +305,11 @@ const deleteFile = filePath =>
  *}
  * @example  'CSV file header example: ' {objName: 'string'}
  */
-const readCSVFile = async (filePath, options = null) =>
-	options != null
+const readCSVFile = async (filePath, options = null) => {
+	return options != null
 		? await csvdata.load(filePath)
 		: await csvdata.load(filePath, options);
-
+};
 /**
  * @param {string} filePath filePath Reads data from "filePath"
  */
@@ -334,6 +333,11 @@ const deleteFolder = filePath =>
 			console.log('Folder deleted successfully!');
 		}
 	});
+
+writeFile(FILE_PATH, reoccurringInvoice, { header: invoiceHeader });
+const duplicateInvoice = [];
+readCSVFile(`./duplicate-invoice.csv`).then(data => console.log(data));
+// console.log(duplicateInvoice);
 
 //          Step 2c: Update Invoice
 //            Step 2b: Add reoccurring monthly expenses to the csv log
