@@ -158,8 +158,11 @@ const newInvoice = (author, amount, Memo) => ({
 const Netflix = newInvoice('Netflix', 19.07, 'invoice memo');
 const Hulu = newInvoice('Hulu', 12.07, 'invoice memo');
 const CrunchyRoll = newInvoice('CrunchyRoll', 35.97, 'invoice memo');
+const Att = newInvoice('AT&T', 235.87, 'invoice memo');
+const Gas = newInvoice('GAS', 50.49, 'invoice memo');
 const invoiceHeader = 'id,author,amount,date,Modified,Modified_Date,Memo';
 let reoccurringInvoice = [Netflix, Hulu, CrunchyRoll];
+const New_Invioce = [Att, Gas];
 
 // function getQuarterlyNumber(month) {
 // 	const getMonths = () => {
@@ -280,17 +283,14 @@ const writeFile = async (filePath, data, options = null) => {
 	}
 	return csvdata.write(filePath, data, options);
 };
-
-// Delete File
 /**
- * @param {string} filePath Reads data from "filePath"
+ * @param {string} filePath Reads data from "filePath" provided
  */
 const deleteFile = filePath =>
 	fs.unlink(filePath, err => {
 		if (err) throw err;
 		console.log(`${filePath} was deleted`);
 	});
-
 /**
  * @description Returns a promise, eventually fulfilled with an array where each item is an object that contains data from a row
  * @param {string} filePath Reads data from "filePath" (the first line of the CSV file must contain headers).
@@ -321,7 +321,6 @@ const createFolder = filePath => {
 	});
 	console.log(`${filePath} directory was created`);
 };
-
 /**
  * @param {string} filePath filePath Reads data from "filePath"
  */
@@ -333,12 +332,38 @@ const deleteFolder = filePath =>
 			console.log('Folder deleted successfully!');
 		}
 	});
-
-writeFile(FILE_PATH, reoccurringInvoice, { header: invoiceHeader });
-const duplicateInvoice = [];
-readCSVFile(`./duplicate-invoice.csv`).then(data => console.log(data));
-// console.log(duplicateInvoice);
-
+/**
+ * @description Returns a promise, eventually fulfilled when done writing data to "filePath"
+ * (be careful, as it overwrites existing files).
+ * @param {string} filePath  Reads data from "filePath" provided
+ * @param {Object} newInvoice
+ * @returns
+ */
+const updateCSVFile = async (filePath, newInvoice, options = null) => {
+	const csvData = await readCSVFile(filePath);
+	if (csvData === undefined)
+		return console.log('Error: CVS Data is equal to undefined');
+	return writeFile(filePath, [...csvData, ...newInvoice], options);
+};
+/**
+ * @description Returns a promise, eventually fulfilled when done writing data to "filePath"
+ * (be careful, as it overwrites existing files).
+ * @param {string} filePath Reads data from "filePath" (the first line of the CSV file must contain headers).
+ * @param {string} id
+ * @param {object} options options argument is a configuration object with the following default values.
+ * @returns
+ */
+const deleteCVSRow = async (filePath, id, options = null) => {
+	const cvsData = await readCSVFile(filePath);
+	const modifiedCVSData = cvsData.filter(i => i.id != id);
+	return writeFile(filePath, modifiedCVSData, options);
+};
+// writeFile(FILE_PATH, reoccurringInvoice, { header: invoiceHeader });
+// updateCSVFile(FILE_PATH, [...New_Invioce], { header: invoiceHeader });
+// deleteCVSRow(FILE_PATH, 'd90a8a87-a64a-478a-aeec-dc6713ead76d',{
+// 	header: invoiceHeader,
+// });
+// deleteFile(`duplicate-invoice.csv`);
 //          Step 2c: Update Invoice
 //            Step 2b: Add reoccurring monthly expenses to the csv log
 //             Net increase (pay stub, extra cash, ...)
