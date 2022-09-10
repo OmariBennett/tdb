@@ -252,7 +252,6 @@ const New_Invioce = [Att, Gas];
 // 	console.log(newInvoices);
 // 	return newInvoices;
 // }
-
 const FILE_PATH = `./duplicate-invoice.csv`; // `./projects/budget/invoices/2022/quarterly-02/logs-08-2022.csv`;
 /**
  * @description Returns a promise, eventually fulfilled when done writing data to "filePath"
@@ -336,7 +335,7 @@ const deleteFolder = filePath =>
  * @description Returns a promise, eventually fulfilled when done writing data to "filePath"
  * (be careful, as it overwrites existing files).
  * @param {string} filePath  Reads data from "filePath" provided
- * @param {Object} newInvoice
+ * @param {Object} newData
  * @returns
  */
 const updateCSVFile = async (filePath, newData, options = null) => {
@@ -354,6 +353,7 @@ const updateCSVFile = async (filePath, newData, options = null) => {
  */
 const deleteCSVRow = async (filePath, id, options = null) => {
 	const csvData = await readCSVFile(filePath);
+	// @ts-ignore
 	const modifiedCSVData = csvData.filter(i => i.id != id);
 	return writeFile(filePath, modifiedCSVData, options);
 };
