@@ -339,28 +339,27 @@ const deleteFolder = filePath =>
  * @param {Object} newInvoice
  * @returns
  */
-const updateCSVFile = async (filePath, newInvoice, options = null) => {
+const updateCSVFile = async (filePath, newData, options = null) => {
 	const csvData = await readCSVFile(filePath);
 	if (csvData === undefined)
-		return console.log('Error: CVS Data is equal to undefined');
-	return writeFile(filePath, [...csvData, ...newInvoice], options);
+		return console.log('Error: CSV Data is equal to undefined');
+	return writeFile(filePath, [...csvData, ...newData], options);
 };
 /**
- * @description Returns a promise, eventually fulfilled when done writing data to "filePath"
- * (be careful, as it overwrites existing files).
+ * @description Delete a single objcet from the CSV array with matching id
  * @param {string} filePath Reads data from "filePath" (the first line of the CSV file must contain headers).
  * @param {string} id
  * @param {object} options options argument is a configuration object with the following default values.
  * @returns
  */
-const deleteCVSRow = async (filePath, id, options = null) => {
-	const cvsData = await readCSVFile(filePath);
-	const modifiedCVSData = cvsData.filter(i => i.id != id);
-	return writeFile(filePath, modifiedCVSData, options);
+const deleteCSVRow = async (filePath, id, options = null) => {
+	const csvData = await readCSVFile(filePath);
+	const modifiedCSVData = csvData.filter(i => i.id != id);
+	return writeFile(filePath, modifiedCSVData, options);
 };
 // writeFile(FILE_PATH, reoccurringInvoice, { header: invoiceHeader });
 // updateCSVFile(FILE_PATH, [...New_Invioce], { header: invoiceHeader });
-// deleteCVSRow(FILE_PATH, 'd90a8a87-a64a-478a-aeec-dc6713ead76d',{
+// deleteCSVRow(FILE_PATH, 'd90a8a87-a64a-478a-aeec-dc6713ead76d',{
 // 	header: invoiceHeader,
 // });
 // deleteFile(`duplicate-invoice.csv`);
