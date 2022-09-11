@@ -54,12 +54,11 @@
                 Data can be presented to users in an HTML TABLE or data grid. */
 
 //  Step  3. Pseudocode
-const XLSX = require('xlsx');
-const fs = require('fs');
-const { v4: uuidv4 } = require('uuid');
-const csvdata = require('csvdata');
-const { get } = require('http');
-const path = require('path');
+import XLSX from 'xlsx';
+import fs from 'fs';
+import { v4 as uuidv4 } from 'uuid';
+// import csvdata from 'csvdata';
+import path from 'path';
 
 const time = new Date();
 
@@ -153,7 +152,7 @@ const newInvoice = (author, amount, Memo) => ({
 	date: currentDate_Time,
 	Modified: false,
 	Modified_Date: '',
-	Memo,
+	Memo
 });
 const Netflix = newInvoice('Netflix', 19.07, 'invoice memo');
 const Hulu = newInvoice('Hulu', 12.07, 'invoice memo');
@@ -197,8 +196,8 @@ const writeFile = async (filePath, data, options = null) => {
 /**
  * @param {string} filePath Reads data from "filePath" provided
  */
-const deleteFile = filePath =>
-	fs.unlink(filePath, err => {
+const deleteFile = (filePath) =>
+	fs.unlink(filePath, (err) => {
 		if (err) throw err;
 		console.log(`${filePath} was deleted`);
 	});
@@ -217,15 +216,13 @@ const deleteFile = filePath =>
  * @example  'CSV file header example: ' {objName: 'string'}
  */
 const readCSVFile = async (filePath, options = null) => {
-	return options != null
-		? await csvdata.load(filePath)
-		: await csvdata.load(filePath, options);
+	return options != null ? await csvdata.load(filePath) : await csvdata.load(filePath, options);
 };
 /**
  * @param {string} filePath filePath Reads data from "filePath"
  */
-const createFolder = filePath => {
-	fs.mkdir(filePath, error => {
+const createFolder = (filePath) => {
+	fs.mkdir(filePath, (error) => {
 		if (error) {
 			console.log(error);
 		}
@@ -235,7 +232,7 @@ const createFolder = filePath => {
 /**
  * @param {string} filePath filePath Reads data from "filePath"
  */
-const deleteFolder = filePath =>
+const deleteFolder = (filePath) =>
 	fs.rmdir(filePath, function (error) {
 		if (error) {
 			throw error;
@@ -252,8 +249,7 @@ const deleteFolder = filePath =>
  */
 const updateCSVFile = async (filePath, newData, options = null) => {
 	const csvData = await readCSVFile(filePath);
-	if (csvData === undefined)
-		return console.log('Error: CSV Data is equal to undefined');
+	if (csvData === undefined) return console.log('Error: CSV Data is equal to undefined');
 	return writeFile(filePath, [...csvData, ...newData], options);
 };
 /**
@@ -266,7 +262,7 @@ const updateCSVFile = async (filePath, newData, options = null) => {
 const deleteCSVRow = async (filePath, id, options = null) => {
 	const csvData = await readCSVFile(filePath);
 	// @ts-ignore
-	const modifiedCSVData = csvData.filter(i => i.id != id);
+	const modifiedCSVData = csvData.filter((i) => i.id != id);
 	return writeFile(filePath, modifiedCSVData, options);
 };
 //          Step 2c: Update Invoice
