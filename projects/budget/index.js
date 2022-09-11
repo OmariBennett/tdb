@@ -163,95 +163,7 @@ const Gas = newInvoice('GAS', 50.49, 'invoice memo');
 const invoiceHeader = 'id,author,amount,date,Modified,Modified_Date,Memo';
 let reoccurringInvoice = [Netflix, Hulu, CrunchyRoll];
 const New_Invioce = [Att, Gas];
-
-// function getQuarterlyNumber(month) {
-// 	const getMonths = () => {
-// 		let months = [];
-// 		for (let index = 0; index < 12; index++) {
-// 			months.push(index);
-// 		}
-// 		return months;
-// 	};
-// 	const totalMonths = getMonths();
-// 	let output = '';
-// 	for (let index = 0; index < totalMonths.length; index++) {
-// 		if (index <= 2 && index === month) {
-// 			output = 'quarterly-00';
-// 		}
-// 		if (index >= 3 && index <= 5 && index === month) {
-// 			output = 'quarterly-01';
-// 		}
-// 		if (index >= 6 && index <= 8 && index === month) {
-// 			output = 'quarterly-02';
-// 		}
-// 		if (index >= 9 && index <= 11 && index === month) {
-// 			output = 'quarterly-03';
-// 		}
-// 	}
-// 	return output;
-// }
-
-// const createFolder = path => {
-// 	if (fs.existsSync(path)) {
-// 		return console.log(`Folder already exists: ${path}`);
-// 	}
-// 	fs.mkdir(path, error => {
-// 		if (error) {
-// 			console.log(error);
-// 		}
-// 	});
-// 	return;
-// };
-
-// function createNewInvoice(path) {
-// 	const params = [path, year, getQuarterlyNumber(currentMonth)];
-// 	if (fs.existsSync(path)) {
-// 		return;
-// 	}
-// 	for (let i = 0; i < 3; i++) {
-// 		switch (i) {
-// 			case 1:
-// 				createFolder(`${path}/${params[i]}`);
-// 				break;
-// 			case 2:
-// 				createFolder(`${path}/${year}/${params[i]}`);
-// 				break;
-
-// 			default:
-// 				createFolder(path);
-// 				break;
-// 		}
-// 	}
-// 	createInvoice(`${path}/${year}/${getQuarterlyNumber(currentMonth)}`);
-// }
-// function createInvoice(path) {
-// 	if (!fs.existsSync(path)) {
-// 		return console.log('Folder already exists...');
-// 	}
-// 	const filePath = `${path}/logs-${formatedMonth}-${year}.csv`;
-// 	csvdata.write(filePath, reoccurringInvoice, {
-// 		header: invoiceHeader,
-// 	});
-// 	return console.log(`Creating new file: { ${filePath} }`);
-// }
-
 //          Step 2b: Get Invoice
-// async function readInvoice(path) {
-// 	const response = await csvdata.load(path, {
-// 		delimiter: ',',
-// 		encoding: 'utf8',
-// 		log: true,
-// 		objName: undefined,
-// 		parse: true,
-// 		stream: false,
-// 	});
-// 	let newInvoices = [];
-// 	response.map(invoice => {
-// 		newInvoices = [...newInvoices, invoice];
-// 	});
-// 	console.log(newInvoices);
-// 	return newInvoices;
-// }
 const FILE_PATH = `./duplicate-invoice.csv`; // `./projects/budget/invoices/2022/quarterly-02/logs-08-2022.csv`;
 /**
  * @description Returns a promise, eventually fulfilled when done writing data to "filePath"
@@ -357,12 +269,6 @@ const deleteCSVRow = async (filePath, id, options = null) => {
 	const modifiedCSVData = csvData.filter(i => i.id != id);
 	return writeFile(filePath, modifiedCSVData, options);
 };
-// writeFile(FILE_PATH, reoccurringInvoice, { header: invoiceHeader });
-// updateCSVFile(FILE_PATH, [...New_Invioce], { header: invoiceHeader });
-// deleteCSVRow(FILE_PATH, 'd90a8a87-a64a-478a-aeec-dc6713ead76d',{
-// 	header: invoiceHeader,
-// });
-// deleteFile(`duplicate-invoice.csv`);
 //          Step 2c: Update Invoice
 //            Step 2b: Add reoccurring monthly expenses to the csv log
 //             Net increase (pay stub, extra cash, ...)
@@ -432,6 +338,11 @@ const deleteCSVRow = async (filePath, id, options = null) => {
 
 function init() {
 	console.log('Initialising...');
-	// createNewInvoice('./projects/budget/invoices');
+	// writeFile(FILE_PATH, reoccurringInvoice, { header: invoiceHeader });
+	// updateCSVFile(FILE_PATH, [...New_Invioce], { header: invoiceHeader });
+	// deleteCSVRow(FILE_PATH, 'd90a8a87-a64a-478a-aeec-dc6713ead76d',{
+	// 	header: invoiceHeader,
+	// });
+	// deleteFile(`duplicate-invoice.csv`);
 }
 init();
