@@ -1,0 +1,6 @@
+{
+  "editor.stickyScroll.enabled": true,
+  "terminal.integrated.smoothScrolling": true,
+  "workbench.experimental.editSessions.enabled": true,
+  "workbench.experimental.editSessions.autoStore": "onShutdown"
+}
