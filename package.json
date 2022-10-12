@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"sheet": "npm run sheetjs",
-    "sheetjs": "nodemon ./projects/budget/index.js",
+		"sheetjs": "nodemon ./projects/budget/index.js",
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
@@ -14,20 +14,20 @@
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write ."
 	},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/OmariBennett/tdb.git"
-  },
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/OmariBennett/tdb.git"
+	},
 	"keywords": [
-    "'js'",
-    "'javaScript'"
-  ],
-  "author": "Jelani B",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/OmariBennett/tdb/issues"
-  },
-  "homepage": "https://github.com/OmariBennett/tdb#readme",
+		"'js'",
+		"'javaScript'"
+	],
+	"author": "Jelani B",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/OmariBennett/tdb/issues"
+	},
+	"homepage": "https://github.com/OmariBennett/tdb#readme",
 	"devDependencies": {
 		"@playwright/test": "^1.25.0",
 		"@sveltejs/adapter-auto": "next",
@@ -41,9 +41,15 @@
 		"svelte": "^3.44.0",
 		"svelte-check": "^2.7.1",
 		"typescript": "^4.7.4",
-    "uuid": "^8.3.2",
+		"uuid": "^8.3.2",
 		"vite": "^3.1.0",
-    "xlsx": "^0.18.5"
+		"xlsx": "^0.18.5"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"cors": "^2.8.5",
+		"express": "^4.18.1",
+		"socket.io": "^4.5.2",
+		"socket.io-client": "^4.5.2"
+	}
 }
