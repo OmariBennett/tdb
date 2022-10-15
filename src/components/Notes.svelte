@@ -12,6 +12,11 @@
 	<dd>are an XML-based markup language for describing two-dimensional based vector graphics.</dd>
 </dl>
 
+<!--
+
+  SVG Basic properties
+
+-->
 <ul>
 	<h2>Basic properties of SVG files</h2>
 	<li>
@@ -59,7 +64,7 @@
 	right, and the positive y direction being to the bottom.
 </p>
 
-<details open>
+<details>
 	<summary
 		>Note that this is slightly different than the way you're taught to graph as a kid</summary
 	> (y axis is flipped). However, this is the same way elements in HTML are positioned (By default, LTR
@@ -76,7 +81,7 @@
 	<i>Without further specification, one user unit equals one screen unit</i>. To explicitly change
 	this behavior, there are several possibilities in SVG.
 </p>
-<details open>
+<details>
 	<summary> Code Example:</summary>
 
 	<code>&lt;svg width="200" height="200" viewBox="0 0 100 100"&gt;…&lt;/svg&gt; </code>
@@ -197,14 +202,37 @@
 			&lt;path d="M20,230 Q40,205 50,230 T90,230" fill="none" stroke="blue" stroke-width="5"/&gt;
 		</code>
 	</details>
-	<details>
-		All of the commands also come in two variants. An uppercase letter specifies absolute
-		coordinates on the page, and a lowercase letter specifies relative coordinates
+
+	<details open>
+		<summary>Path Deep Dive</summary>
+		The shape of a &lt; path &gt; element is defined by one parameter: <b>d</b>. The <b>d</b>
+		attribute contains a series of commands and parameters used by those commands.
+		<br />
+		All of the commands also come in two variants. An uppercase letter specifies absolute coordinates
+		on the page, and a lowercase letter specifies relative coordinates.
+		<br />
+		d is a presentation attribute, and hence can also be used as a CSS property. Path commands
+
+		<h4>Path commands</h4>
+		Path commands are instructions that define a path to be drawn. Each command is composed of a command
+		letter and numbers that represent the command parameters.
+		<ul>
+			SVG defines 6 types of path commands, for a total of 20 commands:
+			<li><b>MoveTo:</b> M, m</li>
+			<li><b>LineTo:</b> L, l, H, h, V, v</li>
+			<li><b>Cubic Bézier Curve:</b> C, c, S, s</li>
+			<li><b>Quadratic Bézier Curve:</b> Q, q, T, t</li>
+			<li><b>Elliptical Arc Curve:</b> A, a</li>
+			<li><b>ClosePath:</b> Z, z</li>
+		</ul>
 	</details>
 </dd>
 
-<h2>Path</h2>
+<!--
 
+  Terminology
+
+-->
 <hr />
 <h2>Terminology</h2>
 <dl>
