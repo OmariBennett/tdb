@@ -203,15 +203,16 @@
 		</code>
 	</details>
 
-	<details open>
+	<details>
 		<summary>Path Deep Dive</summary>
 		The shape of a &lt; path &gt; element is defined by one parameter: <b>d</b>. The <b>d</b>
 		attribute contains a series of commands and parameters used by those commands.
 		<br />
-		All of the commands also come in two variants. An uppercase letter specifies absolute coordinates
-		on the page, and a lowercase letter specifies relative coordinates.
+		All of the commands also come in two variants. An
+		<b><u>uppercase letter specifies absolute coordinates</u></b>
+		on the page, and a <b><u>lowercase letter specifies relative coordinates</u></b>.
 		<br />
-		d is a presentation attribute, and hence can also be used as a CSS property. Path commands
+		d is a presentation attribute, and hence can also be used as a CSS property.
 
 		<h4>Path commands</h4>
 		Path commands are instructions that define a path to be drawn. Each command is composed of a command
@@ -224,6 +225,15 @@
 			<li><b>Quadratic Bézier Curve:</b> Q, q, T, t</li>
 			<li><b>Elliptical Arc Curve:</b> A, a</li>
 			<li><b>ClosePath:</b> Z, z</li>
+		</ul>
+		<br />
+		<ul>
+			It is always possible to specify a negative value as an argument to a command:
+			<li>negative angles will be anti-clockwise;</li>
+			<li>absolute negative x and y values are interpreted as negative coordinates;</li>
+			<li>
+				relative negative x values move to the left, and relative negative y values move upwards.
+			</li>
 		</ul>
 	</details>
 </dd>
